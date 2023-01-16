@@ -35,6 +35,10 @@ const thoughtSchema = new Schema(
 thoughtSchema.virtual('reactionCount').get(function () {
     return this.reactions.length;
   });
+// This will format the timestamp using the toLocaleString() method when the createdAt property is accessed.
+  thoughtSchema.path('createdAt').get(function (v) {
+    return v.toLocaleString();
+});
 
 
 const Thought = model('thought', thoughtSchema);
