@@ -11,8 +11,10 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now(), // Set default value to the current timestamp
+      // Set default value to the current timestamp
+      default: Date.now(), 
       // Use a getter method to format the timestamp on query
+      getters: true,
     },
     username: {
       type: String,
