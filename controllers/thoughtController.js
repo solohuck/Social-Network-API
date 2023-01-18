@@ -41,8 +41,8 @@ module.exports = {
             .catch((err) => res.status(500).json(err))
         },
     // POST to create a reaction stored in a single thought's reactions array field
-    add(req, res) {
-        Thought.findById(req.params.userId)
+    addReaction(req, res) {
+        Thought.findById(req.params.thoughtId)
             .then((thought) => {
                 thought.reaction.push(req.params.reactionId);
                 return thought.save();
@@ -51,4 +51,13 @@ module.exports = {
             .catch((err) => res.status(500).json(err))
         },
     // DELETE to pull and remove a reaction by the reaction's reactionId value
+    removeReaction(req, res) {
+        Thought.findById(req.params.thoughtId)
+            .then((thought) => {
+                thought.reactions.pull(req.params.reactionId);
+                return thought.save();
+            })
+            .then((thought) => res.json(thought))
+            .catch((err) => res.status(500).json(err))
+        },
 };
