@@ -21,7 +21,7 @@ router.route('/:id')
   .delete(deleteUser); // handle DELETE requests to remove a user by its id
 
 // Routing for /api/users/:userId/friends/:friendId endpoint
-router.route('/:userId/friends/:friendId')
+router.route('/:id/friends/:friendId')
   .post(addFriend) // handle POST requests to add a new friend to a user's friend list
   .delete(removeFriend); // handle DELETE requests to remove a friend from a user's friend list
 

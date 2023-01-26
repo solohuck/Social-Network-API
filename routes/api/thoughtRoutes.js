@@ -29,6 +29,9 @@ router.route('/:id')
 // This route handles DELETE requests to remove a reaction by its reactionId.
 router.route('/:thoughtId/reactions')
   .post(addReaction) 
+  
+// This route handles DELETE requests to remove a reaction by its reactionId.
+router.route('/:thoughtId/reactions/reactionId')
   .delete(removeReaction); 
 
 

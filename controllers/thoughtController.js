@@ -22,7 +22,7 @@ module.exports = {
         const newThought = new Thought(req.body);
         newThought.save()
             .then((thought) => {
-                User.findByIdAndUpdate(req.body.userId, { $push: { thoughts: thought._id } })
+                User.findByIdAndUpdate(req.body.id, { $push: { thoughts: thought._id } })
                     .then(() => res.json(thought))
                     .catch((err) => res.status(500).json(err))
             })
@@ -44,7 +44,7 @@ module.exports = {
     addReaction(req, res) {
         Thought.findById(req.params.thoughtId)
             .then((thought) => {
-                thought.reaction.push(req.params.reactionId);
+                thought.reactions.push(req.body);
                 return thought.save();
             })
             .then((thought) => res.json(thought))
@@ -52,10 +52,13 @@ module.exports = {
         },
     // DELETE to pull and remove a reaction by the reaction's reactionId value
     removeReaction(req, res) {
-        Thought.findById(req.params.thoughtId)
+        Thought.findById(req.params.thoughtId) // findById method to find the thought that contains the reaction
             .then((thought) => {
-                thought.reactions.pull(req.params.reactionId);
-                return thought.save();
+                const index = thought.reactions.indexOf(req.params.reactionId); // indexOf method to find the index of the reaction in the reactions array of the thought.
+                if (index > -1) {
+                    thought.reactions.splice(index, 1); // Uses the splice method to remove the reaction from the array, and then it saves the updated thought.
+                }
+                return thought.save(); // The return statement will pass the thought with the removed reaction to the client.
             })
             .then((thought) => res.json(thought))
             .catch((err) => res.status(500).json(err))
